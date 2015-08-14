@@ -181,11 +181,5 @@ Game.prototype.restart = function () {
 };
 
 
-(function (window) {
-  // On window load
-  window.onload = function () {
-    var game = new Game();
 
-    game.init();
-  };
-})(window);
+

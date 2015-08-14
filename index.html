@@ -8,7 +8,7 @@
     <script src="assets/js/libs/easeljs-0.8.1.min.js"></script>
     <script src="assets/js/libs/tweenjs-0.6.1.min.js"></script>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/game.js"></script>
   </head>
 
   <body>
@@ -22,5 +22,16 @@
     </video>
 
     <canvas id="stage" width="1920" height="1080"></canvas>
+
+    <script>
+      (function (window) {
+        // On window load
+        window.onload = function () {
+          var game = new Game();
+
+          game.init();
+        };
+      })(window);
+    </script>
   </body>
 </html>
