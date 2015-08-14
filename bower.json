@@ -1,0 +1,21 @@
+{
+  "name": "jogos-escolares-da-juventude",
+  "version": "0.1.0",
+  "authors": [
+    "Vitor Leal <vitorleal1@gmail.com>"
+  ],
+  "description": "Jogo para os Jogos Escolares da Juventude 2015",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "http://vitorleal.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "processing": "~1.4.15"
+  }
+}

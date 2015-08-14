@@ -1,0 +1,85 @@
+/*
+ * CSS Mini Reset
+ */
+html, body, div,
+form, fieldset, legend,
+label, canvas {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+}
+
+h1, h2, h3,
+h4, h5, h6 {
+  font-weight: normal;
+}
+
+img {
+  border: 0;
+}
+
+body {
+  min-width: 1920px;
+  min-height: 1080px;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+/*
+ * Video
+ */
+video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  background-size: cover;
+}
+
+
+/*
+ * Header
+ */
+.header {
+  height: 160px;
+  padding: 50px 10px 15px 10px;
+  max-width: 1740px;
+  margin: 0 auto;
+}
+
+
+/*
+ * Canvas
+ */
+#stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
