@@ -184,12 +184,12 @@ Game.prototype.insertDots = function gameInsertDots() {
   }
 
   // Update the stage
-  this.stage.update();
 };
 
 // Game init
 Game.prototype.init = function gameInit() {
   this.setup();
+  createjs.Ticker.addEventListener('tick', this.stage);
 };
 
 
@@ -219,6 +219,7 @@ Circle.prototype.create = function circleCreate(conf) {
   this.circle.type = conf.type;
   this.circle.mouseEnabled = true;
 
+  // Circle methods
   this.circle.drawLine = drawLine;
   this.circle.clearLine = clearLine;
   this.circle.scaleUp = scaleUp;
@@ -233,6 +234,7 @@ Circle.prototype.create = function circleCreate(conf) {
     this.circle.line = new createjs.Shape();
 
     // Add mouse events to the circle
+    this.circle.on('mousedown', mousedown);
     this.circle.on('pressmove', pressmove);
     this.circle.on('pressup', pressup);
   }
@@ -240,10 +242,15 @@ Circle.prototype.create = function circleCreate(conf) {
   return this;
 };
 
+
+// Mousedown
+function mousedown(e) {
+  this.scaleUp();
+}
+
 // Pressmove event
 function pressmove(e) {
   this.drawLine();
-  this.scaleUp();
 }
 
 // Pressup event
@@ -256,6 +263,7 @@ function pressup (e) {
     this.stage.mouseY
   );
 
+
   // If pressup is in a answare circle
   if (answare && answare.type === 'answare') {
     // If this is the correct anwsare
@@ -265,12 +273,13 @@ function pressup (e) {
 
       // Emit event score up
       this.stage.dispatchEvent('scoreUp', this.question);
+      createjs.Tween.get(answare).to({ style: '#6bffff' }, 800);
 
     // If this is the wrong answare
     } else {
       this.clearLine();
-      alert('Nono');
     }
+
   } else {
     this.clearLine();
   }
@@ -281,6 +290,8 @@ function drawLine (answare) {
   var toX = answare ? answare.x : this.stage.mouseX,
       toY = answare ? answare.y : this.stage.mouseY;
 
+  this.line.graphics.clear();
+
   // Draw line
   this.line.graphics
     .beginStroke('#6bffff')
@@ -289,12 +300,6 @@ function drawLine (answare) {
     .lineTo(toX, toY);
 
   this.stage.update();
-
-  // If not answare provided clear the line graphics
-  // to prevent multiple lines in the screen
-  if (!answare) {
-    this.line.graphics.clear();
-  }
 }
 
 // Clear the line
@@ -305,13 +310,13 @@ function clearLine () {
 
 // Scale up
 function scaleUp () {
- this.scaleX = 1.5;
- this.scaleY = 1.5;
+  createjs.Tween.get(this, { override: true })
+    .to({ scaleX: 1.5, scaleY: 1.5 }, 100);
 }
 
 // Scale down
 function scaleDown () {
-  this.scaleX = 1;
-  this.scaleY = 1;
+  createjs.Tween.get(this, { override: true })
+    .to({ scaleX: 1, scaleY: 1 }, 100);
 }
 
