@@ -1,5 +1,5 @@
 // Geme class
-var Game = function () {
+var Game = function Game() {
   // Game stage
   this.stage = null;
 
@@ -137,7 +137,7 @@ var Game = function () {
 };
 
 // Game Setup
-Game.prototype.setup = function () {
+Game.prototype.setup = function gameSetup() {
   this.stage = new createjs.Stage('stage');
   this.stage.setBounds(0, 0, 1920, 1080);
   this.stage.isDragging = false;
@@ -145,7 +145,7 @@ Game.prototype.setup = function () {
 };
 
 // Insert questionsa and anwares in the stage
-Game.prototype.insertDots = function () {
+Game.prototype.insertDots = function gameInsertDots() {
   for (var i = 0; i < this.questions.length; i++) {
     // Create the question
     var circle = new Circle();
@@ -158,7 +158,8 @@ Game.prototype.insertDots = function () {
     });
 
     // Add question to the stage
-    this.stage.addChild(question);
+    this.stage.addChild(question.circle);
+    this.stage.addChild(question.circle.line);
 
     // Create the answare
     var circle2 = new Circle();
@@ -171,7 +172,7 @@ Game.prototype.insertDots = function () {
     });
 
     // Add answare to the stage
-    this.stage.addChild(answare);
+    this.stage.addChild(answare.circle);
   }
 
   // Update the stage
@@ -179,7 +180,7 @@ Game.prototype.insertDots = function () {
 };
 
 // Game init
-Game.prototype.init = function () {
+Game.prototype.init = function gameInit() {
   this.setup();
 };
 
@@ -188,53 +189,100 @@ Game.prototype.init = function () {
 /*
  * Circle
  */
-var Circle = function () {
+var Circle = function Circle() {
   this.size = 15;
   this.shadowSize = 20;
-  this.shape = null;
+  this.circle = null;
+  this.line = null;
 };
 
 
 // Create the circle
-Circle.prototype.create = function (conf) {
-  this.shape = new createjs.Shape();
+Circle.prototype.create = function circleCreate(conf) {
+  this.circle = new createjs.Shape();
 
-  this.shape.graphics.beginFill(conf.color).drawCircle(0, 0, this.size);
-  this.shape.x = conf.x;
-  this.shape.y = conf.y;
-  this.shape.question = conf.id;
-  this.shape.type = conf.type;
-  this.shape.mouseEnabled = true;
+  this.circle.graphics
+    .beginFill(conf.color)
+    .drawCircle(0, 0, this.size);
+
+  this.circle.x = conf.x;
+  this.circle.y = conf.y;
+  this.circle.question = conf.id;
+  this.circle.type = conf.type;
+  this.circle.mouseEnabled = true;
+  this.circle.drawLine = this.drawLine;
+  this.circle.clearLine = this.clearLine;
 
   // Add shadow
-  this.shape.shadow = new createjs.Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
+  this.circle.shadow = new createjs
+    .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
 
-  // Add mouse events to the circle
-  if (this.shape.type === 'question') {
-    this.shape.on('pressmove', this.pressmove);
-    this.shape.on('pressup', this.pressup);
+  // If the cirlce is a question
+  if (this.circle.type === 'question') {
+    this.circle.line = new createjs.Shape();
+
+    // Add mouse events to the circle
+    this.circle.on('pressmove', this.pressmove);
+    this.circle.on('pressup', this.pressup);
   }
 
-  return this.shape;
+  return this;
 };
 
 // Pressmove event
-Circle.prototype.pressmove = function (e) {
+Circle.prototype.pressmove = function circlePressmove(e) {
   this.stage.isDragging = true;
+  this.drawLine();
 };
 
 // Pressup event
-Circle.prototype.pressup = function (e) {
+Circle.prototype.pressup = function circlePressup(e) {
   this.stage.isDragging = false;
-  var answare = this.stage.getObjectUnderPoint(this.stage.mouseX, this.stage.mouseY);
 
+  var answare = this.stage.getObjectUnderPoint(
+    this.stage.mouseX,
+    this.stage.mouseY
+  );
+
+  // If pressup is in a answare circle
   if (answare && answare.type === 'answare') {
+    // If this is the correct anwsare
     if (answare.question === this.question) {
+      this.mouseEnabled = false;
+      this.drawLine(answare);
+
       alert('Correct');
 
+    // If this is the wrong answare
     } else {
+      this.clearLine();
       alert('Nono');
     }
+  } else {
+    this.clearLine();
   }
 };
 
+// Draw the line
+Circle.prototype.drawLine = function circleDrawLine(answare) {
+  var toX = answare ? answare.x : this.stage.mouseX,
+      toY = answare ? answare.y : this.stage.mouseY;
+
+  this.line.graphics
+    .beginStroke('#6bffff')
+    .setStrokeStyle(2, 'round')
+    .moveTo(this.x, this.y)
+    .lineTo(toX, toY);
+
+  this.stage.update();
+
+  if (!answare) {
+    this.line.graphics.clear();
+  }
+};
+
+// Clear the line
+Circle.prototype.clearLine = function circleClearLine() {
+  this.line.graphics.clear();
+  this.stage.update();
+};
