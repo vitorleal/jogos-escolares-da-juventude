@@ -1,5 +1,5 @@
 // Geme class
-var Game = function Game() {
+var Game = function Game () {
   // Game stage
   this.stage = null;
 
@@ -137,7 +137,7 @@ var Game = function Game() {
 };
 
 // Game Setup
-Game.prototype.setup = function gameSetup() {
+Game.prototype.setup = function gameSetup () {
   this.stage = new createjs.Stage('stage');
   this.stage.setBounds(0, 0, 1920, 1080);
   this.insertDots();
@@ -148,21 +148,22 @@ Game.prototype.setup = function gameSetup() {
 
     if (this.score.length === 10) {
       alert('Parabéns você terminou');
+      this.restart();
     }
   }.bind(this));
 };
 
 // Insert questionsa and anwares in the stage
-Game.prototype.insertDots = function gameInsertDots() {
+Game.prototype.insertDots = function gameInsertDots () {
   for (var i = 0; i < this.questions.length; i++) {
     // Create the question
     var circle = new Circle();
     var question = circle.create({
-      type: 'question',
+      type : 'question',
       color: this.colors.question,
-      x: this.questions[i].question.x,
-      y: this.questions[i].question.y,
-      id: this.questions[i].id
+      x    : this.questions[i].question.x,
+      y    : this.questions[i].question.y,
+      id   : this.questions[i].id
     });
 
     // Add question to the stage
@@ -172,32 +173,39 @@ Game.prototype.insertDots = function gameInsertDots() {
     // Create the answare
     var circle2 = new Circle();
     var answare = circle2.create({
-      type: 'answare',
+      type : 'answare',
       color: this.colors.answare,
-      x: this.questions[i].answare.x,
-      y: this.questions[i].answare.y,
-      id: this.questions[i].id
+      x    : this.questions[i].answare.x,
+      y    : this.questions[i].answare.y,
+      id   : this.questions[i].id
     });
 
     // Add answare to the stage
     this.stage.addChild(answare.circle);
   }
-
-  // Update the stage
 };
 
 // Game init
-Game.prototype.init = function gameInit() {
+Game.prototype.init = function gameInit () {
   this.setup();
-  createjs.Ticker.addEventListener('tick', this.stage);
+
+  // Add stage ticker
+  createjs.Ticker.addEventListener('tick', function () {
+    this.stage.update();
+  }.bind(this));
 };
 
+// Game restart
+Game.prototype.restart = function gameRestart () {
+  this.score.length = 0;
+  this.init();
+};
 
 
 /*
  * Circle
  */
-var Circle = function Circle() {
+var Circle = function Circle () {
   this.size = 15;
   this.shadowSize = 20;
   this.circle = null;
@@ -206,7 +214,7 @@ var Circle = function Circle() {
 
 
 // Create the circle
-Circle.prototype.create = function circleCreate(conf) {
+Circle.prototype.create = function circleCreate (conf) {
   this.circle = new createjs.Shape();
 
   this.circle.graphics
@@ -244,12 +252,12 @@ Circle.prototype.create = function circleCreate(conf) {
 
 
 // Mousedown
-function mousedown(e) {
+function mousedown (e) {
   this.scaleUp();
 }
 
 // Pressmove event
-function pressmove(e) {
+function pressmove (e) {
   this.drawLine();
 }
 
@@ -290,6 +298,7 @@ function drawLine (answare) {
   var toX = answare ? answare.x : this.stage.mouseX,
       toY = answare ? answare.y : this.stage.mouseY;
 
+  // Clear line to prevent duplication
   this.line.graphics.clear();
 
   // Draw line
@@ -305,7 +314,6 @@ function drawLine (answare) {
 // Clear the line
 function clearLine () {
   this.line.graphics.clear();
-  this.stage.update();
 }
 
 // Scale up
