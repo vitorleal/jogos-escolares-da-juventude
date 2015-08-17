@@ -145,24 +145,30 @@ Game.prototype.setup = function () {
 // Insert questionsa and anwares in the stage
 Game.prototype.insertDots = function () {
   for (var i = 0; i < this.questions.length; i++) {
-    var question = new createjs.Shape();
-    question.graphics.beginFill(this.colors.question).drawCircle(0, 0, 15);
-    question.x = this.questions[i].question.x;
-    question.y = this.questions[i].question.y;
-    question.question = this.questions[i].id;
+    // Create the question
+    var circle = new Circle();
+    var question = circle.create({
+      color: this.colors.question,
+      x: this.questions[i].question.x,
+      y: this.questions[i].question.y,
+      id: this.questions[i].id,
+      type: 'question'
+    });
 
-    // Add shadow
-    question.shadow = new createjs.Shadow(this.colors.question, 0, 0, 20);
+    // Add question to the stage
     this.stage.addChild(question);
 
-    var answare = new createjs.Shape();
-    answare.graphics.beginFill(this.colors.answare).drawCircle(0, 0, 15);
-    answare.x = this.questions[i].answare.x;
-    answare.y = this.questions[i].answare.y;
-    answare.question = this.questions[i].id;
+    // Create the answare
+    var circle2 = new Circle();
+    var answare = circle2.create({
+      color: this.colors.answare,
+      x: this.questions[i].answare.x,
+      y: this.questions[i].answare.y,
+      id: this.questions[i].id,
+      type: 'answare'
+    });
 
-    // Add shadow
-    answare.shadow = new createjs.Shadow(this.colors.answare, 0, 0, 20);
+    // Add answare to the stage
     this.stage.addChild(answare);
   }
 
@@ -175,11 +181,29 @@ Game.prototype.init = function () {
   this.setup();
 };
 
-// Restart the game
-Game.prototype.restart = function () {
 
+/*
+ * Circle
+ */
+var Circle = function () {
+  this.size = 15;
+  this.shadowSize = 20;
 };
 
 
+// Create the circle
+Circle.prototype.create = function (conf) {
+  var circle = new createjs.Shape();
 
+  circle.graphics.beginFill(conf.color).drawCircle(0, 0, this.size);
+  circle.x = conf.x;
+  circle.y = conf.y;
+  circle.qustion = conf.id;
+  circle.type = conf.type;
+
+  // Add shadow
+  circle.shadow = new createjs.Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
+
+  return circle;
+};
 
