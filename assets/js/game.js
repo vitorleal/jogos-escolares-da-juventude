@@ -140,8 +140,16 @@ var Game = function Game() {
 Game.prototype.setup = function gameSetup() {
   this.stage = new createjs.Stage('stage');
   this.stage.setBounds(0, 0, 1920, 1080);
-  this.stage.isDragging = false;
   this.insertDots();
+
+  // On event scoreUp
+  this.stage.addEventListener('scoreUp', function (e) {
+    this.score.push(1);
+
+    if (this.score.length === 10) {
+      alert('Parabéns você terminou');
+    }
+  }.bind(this));
 };
 
 // Insert questionsa and anwares in the stage
@@ -210,35 +218,39 @@ Circle.prototype.create = function circleCreate(conf) {
   this.circle.question = conf.id;
   this.circle.type = conf.type;
   this.circle.mouseEnabled = true;
-  this.circle.drawLine = this.drawLine;
-  this.circle.clearLine = this.clearLine;
+
+  this.circle.drawLine = drawLine;
+  this.circle.clearLine = clearLine;
+  this.circle.scaleUp = scaleUp;
+  this.circle.scaleDown = scaleDown;
 
   // Add shadow
   this.circle.shadow = new createjs
     .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
 
-  // If the cirlce is a question
+  // If the circle is a question
   if (this.circle.type === 'question') {
     this.circle.line = new createjs.Shape();
 
     // Add mouse events to the circle
-    this.circle.on('pressmove', this.pressmove);
-    this.circle.on('pressup', this.pressup);
+    this.circle.on('pressmove', pressmove);
+    this.circle.on('pressup', pressup);
   }
 
   return this;
 };
 
 // Pressmove event
-Circle.prototype.pressmove = function circlePressmove(e) {
-  this.stage.isDragging = true;
+function pressmove(e) {
   this.drawLine();
-};
+  this.scaleUp();
+}
 
 // Pressup event
-Circle.prototype.pressup = function circlePressup(e) {
-  this.stage.isDragging = false;
+function pressup (e) {
+  this.scaleDown();
 
+  // Get the object under the pressup point
   var answare = this.stage.getObjectUnderPoint(
     this.stage.mouseX,
     this.stage.mouseY
@@ -251,7 +263,8 @@ Circle.prototype.pressup = function circlePressup(e) {
       this.mouseEnabled = false;
       this.drawLine(answare);
 
-      alert('Correct');
+      // Emit event score up
+      this.stage.dispatchEvent('scoreUp', this.question);
 
     // If this is the wrong answare
     } else {
@@ -261,13 +274,14 @@ Circle.prototype.pressup = function circlePressup(e) {
   } else {
     this.clearLine();
   }
-};
+}
 
 // Draw the line
-Circle.prototype.drawLine = function circleDrawLine(answare) {
+function drawLine (answare) {
   var toX = answare ? answare.x : this.stage.mouseX,
       toY = answare ? answare.y : this.stage.mouseY;
 
+  // Draw line
   this.line.graphics
     .beginStroke('#6bffff')
     .setStrokeStyle(2, 'round')
@@ -276,13 +290,28 @@ Circle.prototype.drawLine = function circleDrawLine(answare) {
 
   this.stage.update();
 
+  // If not answare provided clear the line graphics
+  // to prevent multiple lines in the screen
   if (!answare) {
     this.line.graphics.clear();
   }
-};
+}
 
 // Clear the line
-Circle.prototype.clearLine = function circleClearLine() {
+function clearLine () {
   this.line.graphics.clear();
   this.stage.update();
-};
+}
+
+// Scale up
+function scaleUp () {
+ this.scaleX = 1.5;
+ this.scaleY = 1.5;
+}
+
+// Scale down
+function scaleDown () {
+  this.scaleX = 1;
+  this.scaleY = 1;
+}
+
