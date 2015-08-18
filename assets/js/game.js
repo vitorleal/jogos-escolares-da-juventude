@@ -1,4 +1,13 @@
-// Geme class
+/**
+ * Creates an instance of the Game object.
+ * @class
+ * @example
+ * ```js
+ * var game = new Game();
+ *
+ * game.init();
+ * ```
+ */
 var Game = function Game () {
   // Game stage
   this.stage = null;
@@ -136,11 +145,14 @@ var Game = function Game () {
   }];
 };
 
-// Game Setup
-Game.prototype.setup = function gameSetup () {
+/**
+ * Setup the Game
+ * @private
+ */
+Game.prototype._setup = function gameSetup () {
   this.stage = new createjs.Stage('stage');
   this.stage.setBounds(0, 0, 1920, 1080);
-  this.insertDots();
+  this._insertDots();
 
   // On event scoreUp
   this.stage.addEventListener('scoreUp', function (e) {
@@ -153,8 +165,11 @@ Game.prototype.setup = function gameSetup () {
   }.bind(this));
 };
 
-// Insert questionsa and anwares in the stage
-Game.prototype.insertDots = function gameInsertDots () {
+/**
+ * Insert questions and anwares in the stage
+ * @private
+ */
+Game.prototype._insertDots = function gameInsertDots () {
   for (var i = 0; i < this.questions.length; i++) {
     // Create the question
     var circle = new Circle();
@@ -185,9 +200,17 @@ Game.prototype.insertDots = function gameInsertDots () {
   }
 };
 
-// Game init
+/**
+ * Initiate the Game
+ * @example
+ * ```js
+ * var game = new Game();
+ *
+ * game.init();
+ * ```
+ */
 Game.prototype.init = function gameInit () {
-  this.setup();
+  this._setup();
 
   // Add stage ticker
   createjs.Ticker.addEventListener('tick', function () {
@@ -195,136 +218,17 @@ Game.prototype.init = function gameInit () {
   }.bind(this));
 };
 
-// Game restart
+/**
+ * Restart the Game
+ * @example
+ * ```js
+ * var game = new Game();
+ *
+ * game.restart();
+ * ```
+ */
 Game.prototype.restart = function gameRestart () {
   this.score.length = 0;
   this.init();
 };
-
-
-/*
- * Circle
- */
-var Circle = function Circle () {
-  this.size = 15;
-  this.shadowSize = 20;
-  this.circle = null;
-  this.line = null;
-};
-
-
-// Create the circle
-Circle.prototype.create = function circleCreate (conf) {
-  this.circle = new createjs.Shape();
-
-  this.circle.graphics
-    .beginFill(conf.color)
-    .drawCircle(0, 0, this.size);
-
-  this.circle.x = conf.x;
-  this.circle.y = conf.y;
-  this.circle.question = conf.id;
-  this.circle.type = conf.type;
-  this.circle.mouseEnabled = true;
-
-  // Circle methods
-  this.circle.drawLine = drawLine;
-  this.circle.clearLine = clearLine;
-  this.circle.scaleUp = scaleUp;
-  this.circle.scaleDown = scaleDown;
-
-  // Add shadow
-  this.circle.shadow = new createjs
-    .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
-
-  // If the circle is a question
-  if (this.circle.type === 'question') {
-    this.circle.line = new createjs.Shape();
-
-    // Add mouse events to the circle
-    this.circle.on('mousedown', mousedown);
-    this.circle.on('pressmove', pressmove);
-    this.circle.on('pressup', pressup);
-  }
-
-  return this;
-};
-
-
-// Mousedown
-function mousedown (e) {
-  this.scaleUp();
-}
-
-// Pressmove event
-function pressmove (e) {
-  this.drawLine();
-}
-
-// Pressup event
-function pressup (e) {
-  this.scaleDown();
-
-  // Get the object under the pressup point
-  var answare = this.stage.getObjectUnderPoint(
-    this.stage.mouseX,
-    this.stage.mouseY
-  );
-
-
-  // If pressup is in a answare circle
-  if (answare && answare.type === 'answare') {
-    // If this is the correct anwsare
-    if (answare.question === this.question) {
-      this.mouseEnabled = false;
-      this.drawLine(answare);
-
-      // Emit event score up
-      this.stage.dispatchEvent('scoreUp', this.question);
-      createjs.Tween.get(answare).to({ style: '#6bffff' }, 800);
-
-    // If this is the wrong answare
-    } else {
-      this.clearLine();
-    }
-
-  } else {
-    this.clearLine();
-  }
-}
-
-// Draw the line
-function drawLine (answare) {
-  var toX = answare ? answare.x : this.stage.mouseX,
-      toY = answare ? answare.y : this.stage.mouseY;
-
-  // Clear line to prevent duplication
-  this.line.graphics.clear();
-
-  // Draw line
-  this.line.graphics
-    .beginStroke('#6bffff')
-    .setStrokeStyle(2, 'round')
-    .moveTo(this.x, this.y)
-    .lineTo(toX, toY);
-
-  this.stage.update();
-}
-
-// Clear the line
-function clearLine () {
-  this.line.graphics.clear();
-}
-
-// Scale up
-function scaleUp () {
-  createjs.Tween.get(this, { override: true })
-    .to({ scaleX: 1.5, scaleY: 1.5 }, 100);
-}
-
-// Scale down
-function scaleDown () {
-  createjs.Tween.get(this, { override: true })
-    .to({ scaleX: 1, scaleY: 1 }, 100);
-}
 
