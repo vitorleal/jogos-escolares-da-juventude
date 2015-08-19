@@ -47,6 +47,7 @@ Circle.prototype.create = function circleCreate (conf) {
   this.circle.question = conf.id;
   this.circle.type = conf.type;
   this.circle.mouseEnabled = true;
+  this.circle.cursor = 'pointer';
 
   // Circle methods
   this.circle.drawLine = drawLine;
@@ -89,9 +90,11 @@ function pressup (e) {
   // Get the object under the pressup point
   var answare = this.stage.getObjectUnderPoint(
     this.stage.mouseX,
-    this.stage.mouseY
+    this.stage.mouseY,
+    2
   );
 
+  console.log(answare);
 
   // If pressup is in a answare circle
   if (answare && answare.type === 'answare') {
@@ -102,7 +105,6 @@ function pressup (e) {
 
       // Emit event score up
       this.stage.dispatchEvent('scoreUp', this.question);
-      createjs.Tween.get(answare).to({ style: '#6bffff' }, 800);
 
     // If this is the wrong answare
     } else {
