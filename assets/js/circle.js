@@ -106,6 +106,7 @@ function pressup (e) {
 
     // If this is the wrong answare
     } else {
+      swal("Resporta errada", "Tente novamente", "error");
       this.clearLine();
     }
 

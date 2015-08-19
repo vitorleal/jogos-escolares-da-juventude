@@ -159,7 +159,7 @@ Game.prototype._setup = function gameSetup () {
     this.score.push(1);
 
     if (this.score.length === 10) {
-      alert('Parabéns você terminou');
+      swal("Parabéns!", "Você terminou o jogo", "success");
       this.restart();
     }
   }.bind(this));
