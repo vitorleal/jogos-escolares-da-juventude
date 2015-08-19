@@ -103,10 +103,11 @@ function pressup (e) {
 
       // Emit event score up
       this.stage.dispatchEvent('scoreUp', this.question);
+      Game.showMessage('success');
 
     // If this is the wrong answare
     } else {
-      swal("Resporta errada", "Tente novamente", "error");
+      Game.showMessage();
       this.clearLine();
     }
 

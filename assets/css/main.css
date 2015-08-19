@@ -64,6 +64,10 @@ body {
   float: right;
 }
 
+.hide {
+  display: none;
+}
+
 /*
  * Video
  */
@@ -228,3 +232,98 @@ video {
   left: 740px;
   top: 345px;
 }
+
+
+/*
+ * Overlay
+ */
+.message {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
+}
+
+.message-overlay {
+  background: rgba(0, 0, 0, .85);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 13;
+}
+
+.message-content {
+  border-radius: 20px;
+  box-shadow: 0 0 14px #6bffff;
+  width: 720px;
+  height: 330px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -360px;
+  margin-top: -165px;
+  text-align: center;
+  z-index: 20;
+}
+
+.message-error .message-content {
+  background: url(../img/error.png) no-repeat center center, #6bffff;
+}
+
+.message-success .message-content {
+  background: url(../img/success.png) no-repeat center center, #6bffff;
+}
+
+.message-done .message-overlay {
+  background: #6ebb00;
+  mix-blend-mode: screen;
+}
+
+.message-done .message-content {
+  background: url(../img/done.png) no-repeat center center;
+  box-shadow: none;
+  width: 1094px;
+  height: 372px;
+  margin-top: -186px;
+  margin-left: -547px;
+}
+
+.ball-fall {
+  display: block;
+}
+
+.ball-fall .message-content {
+  opacity: 0;
+  animation: ball-fall 1.8s ease-in-out;
+}
+
+@keyframes ball-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-145%);
+  }
+  10% {
+    opacity: .5;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(145%);
+  }
+}
+

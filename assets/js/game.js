@@ -159,8 +159,13 @@ Game.prototype._setup = function gameSetup () {
     this.score.push(1);
 
     if (this.score.length === 10) {
-      swal("Parabéns!", "Você terminou o jogo", "success");
-      this.restart();
+      Game.showMessage('done');
+      this.stage.clear();
+
+      // Restart the game after the message
+      setTimeout(function () {
+        this.restart();
+      }.bind(this), 1800);
     }
   }.bind(this));
 };
@@ -230,5 +235,30 @@ Game.prototype.init = function gameInit () {
 Game.prototype.restart = function gameRestart () {
   this.score.length = 0;
   this.init();
+};
+
+
+/**
+ * Show the overlay message
+ * @static
+ * @param [type=error] {string} - The type of the message to show success | error | done
+ * @example
+ * ```js
+ * Game.showMessage();
+ * ```
+ */
+Game.showMessage = function gameShowMessage (type) {
+  var messageType = (type ? type : 'error'),
+      message = document.querySelector('.message'),
+      time = (messageType === 'done') ? 4000 : 2000;
+
+  message.classList.add(`message-${messageType}`);
+  message.classList.add('ball-fall');
+
+  // Close the message
+  setTimeout(function () {
+    message.classList.remove('ball-fall');
+    message.classList.remove(`message-${messageType}`);
+  }, time);
 };
 
