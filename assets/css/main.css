@@ -72,12 +72,13 @@ body {
  * Video
  */
 video {
-  position: fixed;
+  top: 0;
   right: 0;
   bottom: 0;
+  left: 0;
   width: 1920px;
   height: 1080px;
-  z-index: -100;
+  z-index: 0;
 }
 
 
@@ -89,6 +90,11 @@ video {
   padding: 50px 10px 15px 10px;
   max-width: 1740px;
   margin: 0 auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 
@@ -239,12 +245,6 @@ video {
  */
 .message {
   display: none;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 11;
 }
 
 .message-overlay {

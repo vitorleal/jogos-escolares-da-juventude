@@ -160,7 +160,6 @@ Game.prototype._setup = function gameSetup () {
 
     if (this.score.length === 10) {
       Game.showMessage('done');
-      this.stage.clear();
 
       // Restart the game after the message
       setTimeout(function () {
@@ -250,15 +249,31 @@ Game.prototype.restart = function gameRestart () {
 Game.showMessage = function gameShowMessage (type) {
   var messageType = (type ? type : 'error'),
       message = document.querySelector('.message'),
-      time = (messageType === 'done') ? 4000 : 2000;
+      canvas = document.querySelector('canvas'),
+      header = document.querySelector('header'),
+      qa = document.querySelector('.qa'),
+      time = 2000;
 
   message.classList.add(`message-${messageType}`);
   message.classList.add('ball-fall');
+
+  if (messageType === 'done') {
+    time = 5000;
+
+    canvas.classList.add('hide');
+    header.classList.add('hide');
+    qa.classList.add('hide');
+  }
 
   // Close the message
   setTimeout(function () {
     message.classList.remove('ball-fall');
     message.classList.remove(`message-${messageType}`);
+
+    canvas.classList.remove('hide');
+    header.classList.remove('hide');
+    qa.classList.remove('hide');
+
   }, time);
 };
 
