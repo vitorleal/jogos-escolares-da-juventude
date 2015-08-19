@@ -94,8 +94,6 @@ function pressup (e) {
     2
   );
 
-  console.log(answare);
-
   // If pressup is in a answare circle
   if (answare && answare.type === 'answare') {
     // If this is the correct anwsare
