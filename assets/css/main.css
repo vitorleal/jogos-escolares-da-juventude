@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'MetaPro';
+  src: url('../fonts/metapro-normal.woff') format('woff'),
+       url('../fonts/metapro-normal.ttf') format('truetype'),
+       url('../fonts/metapro-normal.svg#MetaPro-Normal') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MetaPro-BI';
+  src: url('../fonts/metapro-bolditalic.woff') format('woff'),
+       url('../fonts/metapro-bolditalic.ttf') format('truetype'),
+       url('../fonts/metapro-bolditalic.svg#MetaPro-BoldItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*
  * CSS Mini Reset
  */
@@ -28,14 +46,15 @@ img {
 }
 
 body {
+  font-size: 15px;
   min-width: 1920px;
   min-height: 1080px;
+  line-height: 1.2em;
+  position: relative;
   -webkit-touch-callout: none;
     -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
             user-select: none;
+  text-align: center;
 }
 
 .float-left {
@@ -52,12 +71,9 @@ video {
   position: fixed;
   right: 0;
   bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
+  width: 1920px;
+  height: 1080px;
   z-index: -100;
-  background-size: cover;
 }
 
 
@@ -81,5 +97,134 @@ video {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 10;
 }
 
+/*
+ * Questions / Answares
+ */
+.abs {
+  position: absolute;
+}
+
+.question {
+  color: white;
+  font-family: MetaPro;
+  z-index: 0;
+}
+
+.answare {
+  color: #b8ffa2;
+  font-family: "MetaPro-BI";
+  z-index: 0;
+}
+
+.question-1 {
+  width: 434px;
+  top: 220px;
+  left: 70px;
+}
+.answare-1 {
+  width: 245px;
+  left: 225px;
+  top: 825px;
+}
+
+.question-2 {
+  width: 270px;
+  left: 310px;
+  top: 370px;
+}
+.answare-2 {
+  width: 278px;
+  left: 29px;
+  top: 565px;
+}
+
+.question-3 {
+  width: 230px;
+  left: 740px;
+  top: 650px;
+}
+.answare-3 {
+  width: 260px;
+  left: 220px;
+  top: 930px;
+}
+
+.question-4 {
+  width: 300px;
+  left: 550px;
+  top: 775px;
+}
+.answare-4 {
+  width: 380px;
+  left: 920px;
+  top: 960px;
+}
+
+.question-5 {
+ width: 285px;
+ left: 550px;
+ top: 955px;
+}
+.answare-5 {
+  width: 380px;
+  left: 1370px;
+  top: 830px;
+}
+
+.question-6 {
+  width: 218px;
+  left: 950px;
+  top: 740px;
+}
+.answare-6 {
+  width: 330px;
+  left: 1430px;
+  top: 525px;
+}
+
+.question-7 {
+  width: 340px;
+  left: 1290px;
+  top: 710px;
+}
+.answare-7 {
+  width: 270px;
+  left: 405px;
+  top: 600px;
+}
+
+.question-8 {
+  width: 230px;
+  left: 670px;
+  top: 470px;
+}
+.answare-8 {
+  width: 350px;
+  left: 1230px;
+  top: 380px;
+}
+
+.question-9 {
+  width: 285px;
+  left: 970px;
+  top: 525px;
+}
+.answare-9 {
+  width: 420px;
+  left: 640px;
+  top: 200px;
+}
+
+.question-10 {
+  width: 510px;;
+  left: 1300px;
+  top: 265px;
+}
+.answare-10 {
+  width: 165px;
+  left: 740px;
+  top: 345px;
+}

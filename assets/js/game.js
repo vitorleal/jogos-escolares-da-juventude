@@ -92,7 +92,7 @@ var Game = function Game () {
     answare: {
       text: 'Lista criada pela WADA-AMA com todas as substâncias e métodos proibidos no esporte',
       x: 1496,
-      y: 626
+      y: 512
     }
   }, {
     id: 7,
@@ -122,8 +122,8 @@ var Game = function Game () {
     id: 9,
     question: {
       text: 'Por que a dopagem deve ser combatida?',
-      x: 1177,
-      y: 604
+      x: 1163,
+      y: 515
     },
     answare: {
       text: 'Porque é uma forma de trapacear os demais atletas. Os atletas devem ter o direito de participar de competições justas e livres de quaisquer formas de dopagem',
