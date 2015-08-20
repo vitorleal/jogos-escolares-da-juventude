@@ -291,7 +291,8 @@ video {
   margin-left: -547px;
 }
 
-.ball-fall {
+.ball-fall,
+.ball-fall-big {
   display: block;
 }
 
@@ -300,7 +301,7 @@ video {
   animation: ball-fall 1.8s ease-in-out;
 }
 
-.message-done.ball-fall .message-content {
+.ball-fall-big .message-content {
   opacity: 0;
   animation: ball-fall-big 5s ease-in-out;
 }
@@ -336,18 +337,12 @@ video {
     transform: translateY(-145%);
   }
   10% {
-    opacity: .5;
-  }
-  20% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  80% {
     opacity: 1;
     transform: translateY(0);
   }
   90% {
-    opacity: .5;
+    opacity: 1;
+    transform: translateY(0);
   }
   100% {
     opacity: 0;

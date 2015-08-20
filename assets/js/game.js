@@ -274,7 +274,7 @@ Game.end = function (callback) {
       canvas = document.querySelector('canvas'),
       header = document.querySelector('header'),
       qa = document.querySelector('.qa'),
-      time = 5000;
+      time = 5500;
 
   message.classList.add('message-done');
   message.classList.add('ball-fall-big');
@@ -283,18 +283,19 @@ Game.end = function (callback) {
   header.classList.add('hide');
   qa.classList.add('hide');
 
+  // If callback execute
+  if (callback) {
+    callback();
+  }
+
   // Close the message
   setTimeout(function () {
-    // If callback execute
-    if (callback) {
-      callback();
-    }
-
-    message.classList.remove('ball-fall-big');
     message.classList.remove('message-done');
 
     canvas.classList.remove('hide');
     header.classList.remove('hide');
     qa.classList.remove('hide');
+
+    message.classList.remove('ball-fall-big');
   }, time);
 };
