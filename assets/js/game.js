@@ -159,12 +159,9 @@ Game.prototype._setup = function gameSetup () {
     this.score.push(1);
 
     if (this.score.length === 10) {
-      Game.showMessage('done');
-
-      // Restart the game after the message
-      setTimeout(function () {
+      Game.end(function () {
         this.restart();
-      }.bind(this), 1800);
+      }.bind(this));
     }
   }.bind(this));
 };
@@ -249,31 +246,55 @@ Game.prototype.restart = function gameRestart () {
 Game.showMessage = function gameShowMessage (type) {
   var messageType = (type ? type : 'error'),
       message = document.querySelector('.message'),
-      canvas = document.querySelector('canvas'),
-      header = document.querySelector('header'),
-      qa = document.querySelector('.qa'),
       time = 2000;
 
   message.classList.add(`message-${messageType}`);
   message.classList.add('ball-fall');
 
-  if (messageType === 'done') {
-    time = 5000;
-
-    canvas.classList.add('hide');
-    header.classList.add('hide');
-    qa.classList.add('hide');
-  }
-
   // Close the message
   setTimeout(function () {
     message.classList.remove('ball-fall');
     message.classList.remove(`message-${messageType}`);
+  }, time);
+};
+
+
+/**
+ * Show end game message
+ * @static
+ * @param callback {function} - Something to execute after the end of the game
+ * @example
+ * ```js
+ * Game.end();
+ * Game.end(function doSomething() {});
+ * ```
+ */
+Game.end = function (callback) {
+  var message = document.querySelector('.message'),
+      canvas = document.querySelector('canvas'),
+      header = document.querySelector('header'),
+      qa = document.querySelector('.qa'),
+      time = 5000;
+
+  message.classList.add('message-done');
+  message.classList.add('ball-fall-big');
+
+  canvas.classList.add('hide');
+  header.classList.add('hide');
+  qa.classList.add('hide');
+
+  // Close the message
+  setTimeout(function () {
+    // If callback execute
+    if (callback) {
+      callback();
+    }
+
+    message.classList.remove('ball-fall-big');
+    message.classList.remove('message-done');
 
     canvas.classList.remove('hide');
     header.classList.remove('hide');
     qa.classList.remove('hide');
-
   }, time);
 };
-
