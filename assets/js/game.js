@@ -191,6 +191,7 @@ Game.prototype._insertDots = function gameInsertDots () {
     var answare = circle2.create({
       type : 'answare',
       color: this.colors.answare,
+      shadowColor: this.colors.question,
       x    : this.questions[i].answare.x,
       y    : this.questions[i].answare.y,
       id   : this.questions[i].id

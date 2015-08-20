@@ -52,19 +52,25 @@ Circle.prototype.create = function circleCreate (conf) {
   // Circle methods
   this.circle.drawLine = drawLine;
   this.circle.clearLine = clearLine;
-  this.circle.scaleUp = scaleUp;
-  this.circle.scaleDown = scaleDown;
 
   // Add shadow
   this.circle.shadow = new createjs
-    .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, this.shadowSize);
+    .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, 20);
+
+  createjs.Tween.get(this.circle.shadow, { loop: true })
+    .to({ blur: 20 }, 700)
+    .to({ blur: 5 }, 700)
+    .to({ blur: 20 }, 700);
+
+  createjs.Tween.get(this.circle, { loop: true })
+    .to({ scaleX: 1.2, scaleY: 1.2 }, 700)
+    .to({ scaleX: 1, scaleY: 1 }, 700);
 
   // If the circle is a question
   if (this.circle.type === 'question') {
     this.circle.line = new createjs.Shape();
 
     // Add mouse events to the circle
-    this.circle.on('mousedown', mousedown);
     this.circle.on('pressmove', pressmove);
     this.circle.on('pressup', pressup);
   }
@@ -73,11 +79,6 @@ Circle.prototype.create = function circleCreate (conf) {
 };
 
 
-// Mousedown
-function mousedown (e) {
-  this.scaleUp();
-}
-
 // Pressmove event
 function pressmove (e) {
   this.drawLine();
@@ -85,8 +86,6 @@ function pressmove (e) {
 
 // Pressup event
 function pressup (e) {
-  this.scaleDown();
-
   // Get the object under the pressup point
   var answare = this.stage.getObjectUnderPoint(
     this.stage.mouseX,
@@ -137,17 +136,5 @@ function drawLine (answare) {
 // Clear the line
 function clearLine () {
   this.line.graphics.clear();
-}
-
-// Scale up
-function scaleUp () {
-  createjs.Tween.get(this, { override: true })
-    .to({ scaleX: 1.5, scaleY: 1.5 }, 100);
-}
-
-// Scale down
-function scaleDown () {
-  createjs.Tween.get(this, { override: true })
-    .to({ scaleX: 1, scaleY: 1 }, 100);
 }
 
