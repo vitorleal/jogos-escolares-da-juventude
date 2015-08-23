@@ -2,6 +2,7 @@
   "name": "jogos-escolares-da-juventude",
   "version": "1.0.0",
   "main": "main.js",
+  "private": true,
   "scripts": {
     "start": "electron .",
     "build": "electron-packager . \"Jogos Escolares da Juventude\" --platform=win32,darwin --arch=ia32,x64 --version=0.25.1"
