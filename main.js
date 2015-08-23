@@ -9,6 +9,7 @@ app.on('window-all-closed', function () {
   }
 });
 
+// Unregister the Keyboard shortcuts
 app.on('will-quit', function () {
   shortcut.unregisterAll();
 });
@@ -26,14 +27,16 @@ app.on('ready', function () {
     win = null;
   });
 
-  // Load the game html
+  // Load the main html game
   win.loadUrl('file://' + __dirname + '/index.html');
 
-  //Shortcuts
+  // Keyboard shortcuts
+  // Reload
   shortcut.register('ctrl+r', function () {
     win.reload();
   });
 
+  // Quit
   shortcut.register('ctrl+q', function () {
     win.close();
   });
