@@ -57,11 +57,13 @@ Circle.prototype.create = function circleCreate (conf) {
   this.circle.shadow = new createjs
     .Shadow((conf.shadowColor ? conf.shadowColor : conf.color), 0, 0, 20);
 
+  // Add a tween loop to the circle shadow blur
   createjs.Tween.get(this.circle.shadow, { loop: true })
     .to({ blur: 20 }, 700)
     .to({ blur: 5 }, 700)
     .to({ blur: 20 }, 700);
 
+  // Add a tweent loop to the circle scale X/Y
   createjs.Tween.get(this.circle, { loop: true })
     .to({ scaleX: 1.2, scaleY: 1.2 }, 700)
     .to({ scaleX: 1, scaleY: 1 }, 700);
