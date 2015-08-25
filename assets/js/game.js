@@ -150,8 +150,13 @@ var Game = function Game () {
  * @private
  */
 Game.prototype._setup = function gameSetup () {
+  // Create the stage
   this.stage = new createjs.Stage('stage');
+
+  // Add the stage boungs and dimentions
   this.stage.setBounds(0, 0, 1920, 1080);
+
+  // Add support to touch interfaces
   createjs.Touch.enable(this.stage);
 
   // Insert the dot in the stage
