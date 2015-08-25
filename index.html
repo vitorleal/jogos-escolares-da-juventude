@@ -20,7 +20,7 @@
 
     <header class="header">
       <img class="float-left" src="assets/img/title.png" draggable="false" />
-      <img class="float-right" src="assets/img/logos.png" draggable="false" />
+      <img class="reset float-right" src="assets/img/logos.png" draggable="false" />
     </header>
 
     <video autoplay loop>
@@ -68,6 +68,11 @@
           var game = new Game();
 
           game.init();
+
+          var reset = document.querySelector('.reset');
+          reset.addEventListener('dblclick', function () {
+            game.restart();
+          });
         };
       })(window);
     </script>

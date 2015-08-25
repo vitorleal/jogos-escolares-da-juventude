@@ -15,6 +15,9 @@ var Game = function Game () {
   // Score array
   this.score = [];
 
+  // Score up listener
+  this.scoreUpListener = null;
+
   // Colors
   this.colors = {
     question: '#6bffff',
@@ -163,19 +166,32 @@ Game.prototype._setup = function gameSetup () {
   this._insertDots();
 
   // On event scoreUp
-  this.stage.addEventListener('scoreUp', function (e) {
-    // Add one point to the scores
-    this.score.push(1);
+  this.scoreUpListener = this.stage.on('scoreUp', this._scoreUp.bind(this));
+};
 
-    // If score length equal the number of questions
-    if (this.score.length === this.questions.length) {
-      // End the game
-      Game.end(function () {
-        // Restar the game
-        this.restart();
-      }.bind(this));
-    }
-  }.bind(this));
+/**
+ * Score up method
+ * @example
+ * ```js
+ * var game = new Game();
+ *
+ * game._scoreUp();
+ * ```
+ */
+Game.prototype._scoreUp = function scoreUp () {
+  // Add one point to the scores
+  this.score.push(1);
+
+  console.log(this.score.length);
+
+  // If score length equal the number of questions
+  if (this.score.length === this.questions.length) {
+    // End the game
+    Game.end(function () {
+      // Restar the game
+      this.restart();
+    }.bind(this));
+  }
 };
 
 /**
@@ -242,7 +258,9 @@ Game.prototype.init = function gameInit () {
  * ```
  */
 Game.prototype.restart = function gameRestart () {
+  createjs.Touch.disable(this.stage);
   this.score.length = 0;
+  this.stage.off('scoreUp', this.scoreUpListener);
   this.init();
 };
 
