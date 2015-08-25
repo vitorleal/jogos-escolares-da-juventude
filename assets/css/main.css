@@ -103,6 +103,7 @@ video {
   width: 58px;
   height: 42px;
   text-indent: -100%;
+  overflow: hidden;
 }
 
 /*
