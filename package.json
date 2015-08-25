@@ -11,8 +11,6 @@
     "clean": "rm -rf Jogos* && rm ./assets/js/all.js"
   },
   "devDependencies": {
-    "electron-packager": "5.0.2",
-    "electron-prebuilt": "0.31.0",
     "jscat": "0.0.2"
   }
 }
