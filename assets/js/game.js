@@ -152,13 +152,18 @@ var Game = function Game () {
 Game.prototype._setup = function gameSetup () {
   this.stage = new createjs.Stage('stage');
   this.stage.setBounds(0, 0, 1920, 1080);
+  createjs.Touch.enable(this.stage);
+
+  // Insert the dot in the stage
   this._insertDots();
 
   // On event scoreUp
   this.stage.addEventListener('scoreUp', function (e) {
     this.score.push(1);
 
+    // If score length equal the number of questions
     if (this.score.length === 10) {
+      // End the game
       Game.end(function () {
         this.restart();
       }.bind(this));
