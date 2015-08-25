@@ -28,7 +28,7 @@ app.on('ready', function () {
   });
 
   // Load the main html game
-  win.loadUrl('file://' + __dirname + '/index.html');
+  win.loadUrl(`file://${__dirname}/index.html`);
 
   // Keyboard shortcuts
   // Reload
