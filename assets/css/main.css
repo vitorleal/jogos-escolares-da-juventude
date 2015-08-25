@@ -96,6 +96,14 @@ video {
   z-index: 11;
 }
 
+.reset {
+  position: absolute;
+  right: 155px;
+  top: 45px;
+  width: 58px;
+  height: 42px;
+  text-indent: -100%;
+}
 
 /*
  * Canvas
