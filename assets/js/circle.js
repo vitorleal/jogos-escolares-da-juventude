@@ -11,6 +11,8 @@ var Circle = function Circle () {
   this.shadowSize = 20;
   this.circle = null;
   this.line = null;
+
+  return this;
 };
 
 
@@ -38,10 +40,12 @@ var Circle = function Circle () {
 Circle.prototype.create = function circleCreate (conf) {
   this.circle = new createjs.Shape();
 
+  // Create the circle graphics
   this.circle.graphics
     .beginFill(conf.color)
     .drawCircle(0, 0, this.size);
 
+  // Add the circle params
   this.circle.x = conf.x;
   this.circle.y = conf.y;
   this.circle.question = conf.id;
@@ -50,8 +54,8 @@ Circle.prototype.create = function circleCreate (conf) {
   this.circle.cursor = 'pointer';
 
   // Circle methods
-  this.circle.drawLine = drawLine;
-  this.circle.clearLine = clearLine;
+  this.circle.drawLine = _drawLine;
+  this.circle.clearLine = _clearLine;
 
   // Add shadow
   this.circle.shadow = new createjs
@@ -112,13 +116,14 @@ function pressup (e) {
       this.clearLine();
     }
 
+  // If pressup is not in a answare circle
   } else {
     this.clearLine();
   }
 }
 
 // Draw the line
-function drawLine (answare) {
+function _drawLine (answare) {
   var toX = answare ? answare.x : this.stage.mouseX,
       toY = answare ? answare.y : this.stage.mouseY;
 
@@ -132,11 +137,12 @@ function drawLine (answare) {
     .moveTo(this.x, this.y)
     .lineTo(toX, toY);
 
+  // Update the stage
   this.stage.update();
 }
 
 // Clear the line
-function clearLine () {
+function _clearLine () {
   this.line.graphics.clear();
 }
 
