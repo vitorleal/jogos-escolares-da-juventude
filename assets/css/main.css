@@ -46,6 +46,7 @@ img {
 }
 
 body {
+  background: black;
   font-size: 15px;
   min-width: 1920px;
   min-height: 1080px;
@@ -76,6 +77,7 @@ body {
 video {
   width: 1922px;
   height: 1082px;
+  opacity: .7;
 }
 
 
