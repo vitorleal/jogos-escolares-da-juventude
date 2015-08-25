@@ -254,11 +254,13 @@ Game.showMessage = function gameShowMessage (type) {
       message = document.querySelector('.message'),
       time = 2000;
 
+  // Add classes to the message
   message.classList.add(`message-${messageType}`);
   message.classList.add('ball-fall');
 
   // Close the message
   setTimeout(function () {
+    // Remove classes from the message
     message.classList.remove('ball-fall');
     message.classList.remove(`message-${messageType}`);
   }, time);
@@ -282,9 +284,11 @@ Game.end = function (callback) {
       qa = document.querySelector('.qa'),
       time = 5500;
 
+  // Add animation classes to the message
   message.classList.add('message-done');
   message.classList.add('ball-fall-big');
 
+  // Hide the canvas, header and the questions/answares
   canvas.classList.add('hide');
   header.classList.add('hide');
   qa.classList.add('hide');
@@ -296,12 +300,15 @@ Game.end = function (callback) {
 
   // Close the message
   setTimeout(function () {
+    // Remoce the class from the message
     message.classList.remove('message-done');
 
+    // Show the canvas, header and questions/answares
     canvas.classList.remove('hide');
     header.classList.remove('hide');
     qa.classList.remove('hide');
 
+    // Remove the animation class from message
     message.classList.remove('ball-fall-big');
   }, time);
 };

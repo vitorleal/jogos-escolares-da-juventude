@@ -18,7 +18,6 @@ var Circle = function Circle () {
 
 /**
  * Draw the shape and add the event listners to the Circle.
- * @class
  * @param conf {object} - configuration object.
  * @param conf.x {int} - X postion in the canvas.
  * @param conf.y {int} - Y postion in the canvas.
@@ -122,7 +121,17 @@ function pressup (e) {
   }
 }
 
-// Draw the line
+/**
+ * Draw the line
+ * @param [answare] {object} - Optional anwsare object.
+ * @example
+ * ```js
+ * var circle = new Circle();
+ * circle.drawLine();
+ *
+ * circle.drawLine(anwsare);
+ * ```
+ */
 function _drawLine (answare) {
   var toX = answare ? answare.x : this.stage.mouseX,
       toY = answare ? answare.y : this.stage.mouseY;
