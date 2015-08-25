@@ -164,12 +164,14 @@ Game.prototype._setup = function gameSetup () {
 
   // On event scoreUp
   this.stage.addEventListener('scoreUp', function (e) {
+    // Add one point to the scores
     this.score.push(1);
 
     // If score length equal the number of questions
-    if (this.score.length === 10) {
+    if (this.score.length === this.questions.length) {
       // End the game
       Game.end(function () {
+        // Restar the game
         this.restart();
       }.bind(this));
     }
