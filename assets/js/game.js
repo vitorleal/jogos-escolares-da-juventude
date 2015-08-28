@@ -21,7 +21,7 @@ var Game = function Game () {
   // Colors
   this.colors = {
     question: '#6bffff',
-    answare: '#b8ffa2'
+    answare: '#00FF51'
   };
 
   // Game questions
