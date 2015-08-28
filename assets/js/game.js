@@ -40,7 +40,7 @@ var Game = function Game () {
   },{
     id: 2,
     question: {
-      text: 'Como é garantida a correta identificação da amostra de cada atleta se o nome não consta do frasco?',
+      text: 'Como é garantida a correta identificação da amostra de cada atleta se o nome não consta no frasco?',
       x: 362,
       y: 360
     },
