@@ -10,7 +10,7 @@
     "prebuild-mac": "npm run concat",
     "build-mac": "electron-packager . \"Jogos Escolares da Juventude\" --platform=darwin --arch=x64 --version=0.31.0",
     "concat": "./node_modules/jscat/bin/jscat ./assets/js/*.js > ./assets/js/all.js",
-    "clean": "rm -rf Jogos*"
+    "clean": "rm -rf Jogos* && rm assets/js/all.js"
   },
   "devDependencies": {
     "jscat": "0.0.2"
