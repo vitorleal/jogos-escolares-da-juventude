@@ -9,7 +9,7 @@
     <script src="assets/js/libs/easeljs-0.8.1.min.js"></script>
     <script src="assets/js/libs/tweenjs-0.6.1.min.js"></script>
 
-    <script src="assets/js/all.js"></script>
+    <script src="assets/js/bundle.js"></script>
   </head>
 
   <body>
@@ -61,21 +61,5 @@
       <p class="question question-10 abs">O que o atleta deve fazer se precisar continuar usando um medicamento autorizado por uma AUT – Autorização de Uso Terapêutico depois do vencimento do prazo de validade?</p>
       <p class="answare answare-10 abs">Solicitar uma nova AUT</p>
     </div>
-
-    <script>
-      (function (window) {
-        // On window load
-        window.onload = function () {
-          var game = new Game();
-
-          game.init();
-
-          var reset = document.querySelector('.reset');
-          reset.addEventListener('click', function () {
-            game.restart();
-          });
-        };
-      })(window);
-    </script>
   </body>
 </html>
