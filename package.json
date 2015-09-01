@@ -5,14 +5,16 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "prebuild-win": "npm run concat",
+    "prebuild-win": "npm run build",
     "build-win": "electron-packager . \"Jogos Escolares da Juventude\" --platform=win32 --arch=ia32 --version=0.31.0",
-    "prebuild-mac": "npm run concat",
+    "prebuild-mac": "npm run build",
     "build-mac": "electron-packager . \"Jogos Escolares da Juventude\" --platform=darwin --arch=x64 --version=0.31.0",
-    "concat": "./node_modules/jscat/bin/jscat ./assets/js/*.js > ./assets/js/all.js",
-    "clean": "rm -rf Jogos* && rm assets/js/all.js"
+    "build": "browserify assets/js/*.es6.js -t babelify --outfile assets/js/bundle.js",
+    "clean": "rm -rf Jogos* && rm assets/js/bundle.js"
   },
   "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.0.1",
     "jscat": "0.0.2"
   }
 }
