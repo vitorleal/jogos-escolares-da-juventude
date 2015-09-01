@@ -53,7 +53,6 @@ export class Game {
     this.scoreUpListener = this.stage.on('scoreUp', () => this._scoreUp());
   }
 
-
   /**
    * Score up method
    * @example
@@ -77,12 +76,13 @@ export class Game {
     }
   }
 
-
   /**
-   * Insert questions and anwares in the stage
+   * Insert questions and anwares dots in the stage
    * @private
    */
   _insertDots() {
+    let qa = document.querySelector('.qa');
+
     for (var item of this.questions) {
       // Create the question
       let circle = new Circle();
@@ -98,6 +98,14 @@ export class Game {
       this.stage.addChild(question.circle);
       this.stage.addChild(question.circle.line);
 
+      //Insert the question paragraph
+      this._insertParagraph(
+        'question',
+        item.id,
+        item.question.text,
+        qa
+      );
+
       // Create the answare
       let circle2 = new Circle();
       let answare = circle2.create({
@@ -111,9 +119,32 @@ export class Game {
 
       // Add answare to the stage
       this.stage.addChild(answare.circle);
+      //
+      //Insert the answare paragraph
+      this._insertParagraph(
+        'answare',
+        item.id,
+        item.answare.text,
+        qa
+      );
     }
   }
 
+  /**
+   * Insert parahgraph with questions and anwares
+   * @param type {string} - type question or answare
+   * @param id {int} - id of the parahgraph
+   * @param info {string} - paragraph text
+   * @param parent {object} - parent were the paragraph should be inserted
+   * @private
+   */
+  _insertParagraph(type, id, text, parent) {
+    let parahgraph = document.createElement('p');
+    parahgraph.innerHTML = text;
+    parahgraph.classList.add(`${type}`, `${type}-${id}`, 'abs');
+
+    parent.appendChild(parahgraph);
+  }
 
   /**
    * Initiate the Game
@@ -219,6 +250,6 @@ export class Game {
       // Remove the animation class from message
       message.classList.remove('ball-fall-big');
     }, time);
-  };
+  }
 }
 
