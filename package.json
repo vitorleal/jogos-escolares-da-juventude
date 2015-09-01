@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "prebuild-win": "npm run build",
+    "prebuild-win": "npm run compile",
     "build-win": "electron-packager . \"Jogos Escolares da Juventude\" --platform=win32 --arch=ia32 --version=0.31.0",
-    "prebuild-mac": "npm run build",
+    "prebuild-mac": "npm run compile",
     "build-mac": "electron-packager . \"Jogos Escolares da Juventude\" --platform=darwin --arch=x64 --version=0.31.0",
-    "build": "browserify assets/js/*.es6.js -t babelify --outfile assets/js/bundle.js",
+    "compile": "browserify assets/js/*.es6.js -t babelify --outfile assets/js/bundle.js",
     "clean": "rm -rf Jogos* && rm assets/js/bundle.js"
   },
   "devDependencies": {
